@@ -15,7 +15,7 @@ export default defineConfig({
 	],
 	build: {
 		lib: {
-			name: 'Svelte-like Store',
+			name: 'badger',
 			formats: ['es'],
 			entry: resolve(__dirname, "src/index.ts"),
 			fileName: (format) => `index.${format}.js`
