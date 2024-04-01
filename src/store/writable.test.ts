@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { awaitNext } from "../../tests/utils";
+
 import { writable } from "./writable";
 
 describe("writable", () => {
@@ -58,7 +60,6 @@ describe("writable", () => {
 			expect(mock).toHaveBeenCalledWith(data);
 			result.set(1234);
 			expect(mock).toHaveBeenCalledWith(1234);
-
 			unsub();
 			// The listener should _not_ be called after the unsubscribe happens.
 			result.set(1);
@@ -86,6 +87,35 @@ describe("writable", () => {
 				name: "Fdsa",
 			}));
 			expect(mock).toHaveBeenCalledTimes(1);
+			unsub();
+		});
+
+		it("should allow passing `storageEngine` in the options", () => {
+			const obj = { id: "1234", name: "Waffles" };
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const initialValue = undefined as any as typeof obj;
+			const storage = {
+				engine: "localStorage" as const,
+				key: "some-key",
+				getItem: vi.fn().mockReturnValue((obj)),
+				setItem: vi.fn(),
+				removeItem: vi.fn(),
+			};
+			const result = writable<typeof obj>(initialValue, { storage });
+			expect(storage.getItem).toHaveBeenCalledWith(storage.key);
+
+			const mock = vi.fn();
+			const unsub = result.subscribe(mock);
+			expect(mock).toHaveBeenCalledWith(obj);
+
+			result.set({ id: "1234", name: "Asdf" });
+			expect(storage.setItem).toHaveBeenCalledWith(storage.key, { id: "1234", name: "Asdf" });
+
+			result.update((oldVal) => ({
+				id: oldVal.id,
+				name: "Fdsa",
+			}));
+			expect(storage.setItem).toHaveBeenCalledWith(storage.key, { id: "1234", name: "Fdsa" });
 			unsub();
 		});
 	});

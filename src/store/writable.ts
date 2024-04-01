@@ -1,13 +1,26 @@
-import { ListenerFn, StoreOptions, Writable } from "./types";
+import { buildStorage } from "./storage";
+import type { ListenerFn, StoreOptions, Writable, WritableOptions } from "./types";
 
 class WritableStore<T> implements Writable<T> {
 	#value: T;
-	#opts?: StoreOptions<T>;
+	#opts?: WritableOptions<T>;
 	#listeners: ListenerFn<T>[] = [];
 
-	constructor(initialValue: T, opts?: StoreOptions<T>) {
+	constructor(initialValue: T, opts?: WritableOptions<T>) {
 		this.#value = initialValue;
 		this.#opts = opts;
+		if (this.#opts?.storage) {
+			const storedValue = this.#opts.storage.getItem(this.#opts.storage.key);
+			if (storedValue) {
+				this.#value = storedValue;
+			}
+		}
+	}
+
+	private updateInternalStore() {
+		if (this.#opts?.storage) {
+			this.#opts.storage.setItem(this.#opts.storage.key, this.#value);
+		}
 	}
 
 	public get value(): T {
@@ -29,6 +42,7 @@ class WritableStore<T> implements Writable<T> {
 		) {
 			this.#value = val;
 			this.#listeners.forEach((fn) => fn(val));
+			this.updateInternalStore();
 		}
 	}
 
@@ -71,10 +85,22 @@ class WritableStore<T> implements Writable<T> {
 		) {
 			this.#value = newValue;
 			this.#listeners.forEach((fn) => fn(newValue));
+			this.updateInternalStore();
 		}
 	}
 }
 
+/**
+ * Creates a writable store with the provided data and options.
+ *
+ * @param data - The initial value of the store
+ * @param opts - Options for the store
+ * @returns A writable store
+ */
 export const writable = <T>(data: T, opts?: StoreOptions<T>): Writable<T> => {
-	return new WritableStore(data, opts);
+	const options = {
+		shouldUpdate: opts?.shouldUpdate,
+		storage: buildStorage(opts?.storage),
+	};
+	return new WritableStore(data, options);
 };
