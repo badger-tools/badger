@@ -16,7 +16,7 @@ export default defineConfig({
 	build: {
 		lib: {
 			name: 'badger',
-			formats: ['es'],
+			formats: ['es', 'cjs'],
 			entry: resolve(__dirname, "src/index.ts"),
 			fileName: (format) => `index.${format}.js`
 		},
