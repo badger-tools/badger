@@ -21,12 +21,16 @@ class ReadableStore<T> implements Readable<T> {
 		opts?: StoreOptions<T>,
 	) {
 		this.#value = writable<T>(undefined as unknown as T, opts) as Writable<T>;
-		selector(getStoreValue(stores), this.#value.set.bind(this.#value));
+		selector(getStoreValue(stores), (newValue: T) => {
+			return this.#value.set(newValue);
+		});
 
 		(Array.isArray(stores) ? stores : [stores]).forEach((store) => {
 			store.subscribe(() => {
 				const currentValues = getStoreValue(stores);
-				selector(currentValues, this.#value.set.bind(this.#value));
+				selector(currentValues, (newValue: T) => {
+					this.#value.set(newValue);
+				});
 			});
 		});
 	}
