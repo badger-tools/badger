@@ -1,7 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { awaitNext } from "../../tests/utils";
-
 import { writable } from "./writable";
 
 describe("writable", () => {
