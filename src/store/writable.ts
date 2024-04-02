@@ -97,10 +97,10 @@ class WritableStore<T> implements Writable<T> {
  * @param opts - Options for the store
  * @returns A writable store
  */
-export const writable = <T>(data: T, opts?: StoreOptions<T>): Writable<T> => {
+export const writable = <T>(data?: T, opts?: StoreOptions<T>): Writable<T> => {
 	const options = {
 		shouldUpdate: opts?.shouldUpdate,
 		storage: buildStorage(opts?.storage),
 	};
-	return new WritableStore(data, options);
+	return new WritableStore(data as T, options);
 };
