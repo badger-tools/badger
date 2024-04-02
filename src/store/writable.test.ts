@@ -39,7 +39,7 @@ describe("writable", () => {
 
 		it("should not call update on a store with undefined value", () => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const result = writable<number>(undefined as any);
+			const result = writable<number>();
 			const mock = vi.fn();
 			result.update(mock);
 			expect(mock).not.toHaveBeenCalled();
@@ -91,7 +91,7 @@ describe("writable", () => {
 		it("should allow passing `storageEngine` in the options", () => {
 			const obj = { id: "1234", name: "Waffles" };
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const initialValue = undefined as any as typeof obj;
+			const initialValue = undefined;
 			const storage = {
 				engine: "localStorage" as const,
 				key: "some-key",
