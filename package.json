@@ -1,6 +1,10 @@
 {
   "name": "@badger-tools/badger",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/badger-tools/badger.git"
+  },
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
