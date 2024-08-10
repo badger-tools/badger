@@ -1,6 +1,6 @@
 {
-  "name": "badger",
-  "version": "0.0.1",
+  "name": "@badger-tools/badger",
+  "version": "1.0.0",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
