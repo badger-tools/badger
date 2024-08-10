@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 
 import { Readable, Writable } from "../core";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const unset: any = Symbol();
-
 export function useStore<T>(store: Readable<T> | Writable<T>): T {
-	const [value, set] = useState<T>(unset as unknown as T);
+	const [value, set] = useState<T>(store.value);
 
 	useEffect(() => store.subscribe(set), [store]);
 
-	return value === unset ? store.value : value;
+	return value;
 }
