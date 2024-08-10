@@ -11,7 +11,8 @@ export class WritableStore<T> implements Writable<T> {
 		this.#opts = opts;
 		if (this.#opts?.storage) {
 			const storedValue = this.#opts.storage.getItem(this.#opts.storage.key);
-			if (storedValue) {
+			const shouldUpdate = this.#opts.shouldUpdate ?? (() => true);
+			if (storedValue && shouldUpdate(this.#value, storedValue)) {
 				this.#value = storedValue;
 			}
 		}

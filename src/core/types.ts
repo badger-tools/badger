@@ -28,7 +28,7 @@ export type StoreOptions<T> = {
 };
 
 export type WritableOptions<T> = {
-	shouldUpdate?: (a: T, b: T) => boolean;
+	shouldUpdate?: (curr: T, next: T) => boolean;
 	storage?: StorageEngine<T>;
 };
 
