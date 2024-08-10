@@ -17,11 +17,15 @@ export default defineConfig({
 		lib: {
 			name: 'badger',
 			formats: ['es', 'cjs'],
-			entry: resolve(__dirname, "src/index.ts"),
-			fileName: (format) => `index.${format}.js`
+			entry: {
+				index: resolve(__dirname, "src/core/index.ts"),
+				react: resolve(__dirname, "src/react/index.ts"),
+				svelte: resolve(__dirname, "src/svelte/index.ts"),
+			},
+			// fileName: (format) => `index.${format}.js`
 		},
 		rollupOptions: {
-			external: ['react'],
+			external: ['react', 'svelte'],
 			output: {
 				globals: {
 					react: 'React'

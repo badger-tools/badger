@@ -1,4 +1,4 @@
-import { Writable } from "../src/store/types";
+import { Writable } from "../src/core/types";
 
 /**
  * Helper function to wait for the next value of an atom that satisfies

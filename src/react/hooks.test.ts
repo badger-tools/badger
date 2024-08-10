@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 
-import { writable } from "../store";
+import { writable } from "../core";
 
 import { useStore } from "./hooks";
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Readable, Writable } from "../store";
+import { Readable, Writable } from "../core";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const unset: any = Symbol();

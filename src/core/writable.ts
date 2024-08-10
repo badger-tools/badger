@@ -1,7 +1,7 @@
 import { buildStorage } from "./storage";
 import type { ListenerFn, StoreOptions, Writable, WritableOptions } from "./types";
 
-class WritableStore<T> implements Writable<T> {
+export class WritableStore<T> implements Writable<T> {
 	#value: T;
 	#opts?: WritableOptions<T>;
 	#listeners: ListenerFn<T>[] = [];
