@@ -1,32 +1,34 @@
 {
   "name": "@badger-tools/badger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/badger-tools/badger.git"
+    "url": "git+https://github.com/badger-tools/badger.git"
   },
   "type": "module",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     },
     "./svelte": {
-      "import": "./dist/svelte/index.js",
-      "require": "./dist/svelte/index.cjs",
-      "types": "./dist/svelte/index.d.ts"
+      "import": "./dist/svelte.js",
+      "require": "./dist/svelte.cjs",
+      "types": "./dist/svelte.d.ts"
     },
     "./react": {
-      "import": "./dist/react/index.js",
-      "require": "./dist/react/index.cjs",
-      "types": "./dist/react/index.d.ts"
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs",
+      "types": "./dist/react.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
